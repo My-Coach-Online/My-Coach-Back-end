@@ -35,6 +35,24 @@ app.post('/api/contact', (req, res) => {
       console.log('Updated file contents:', JSON.stringify(jsonData, null, 2));
 
       res.status(200).json({ message: 'Data saved successfully' });
+
+
+      app.get('/api/data', (req, res) => {
+        const filePath = path.join(__dirname, 'form-data.json');
+      
+        fs.readFile(filePath, 'utf8', (err, data) => {
+          if (err) {
+            return res.status(500).json({ error: 'Failed to read data file' });
+          }
+      
+          res.json(JSON.parse(data));
+        });
+      });
+      
+      // Start the server
+      app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+      });
     });
   });
 });
